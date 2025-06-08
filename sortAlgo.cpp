@@ -139,11 +139,64 @@ void quickSort2Pivot(int* arr, int left, int right){
     quickSort2Pivot(arr, gt + 1, right);
 }
 
+void bubbleSort(int* arr, int left, int right){
+    if(left >= right){
+        return;
+    }
 
-// #define QUICK_SORT(x, y, z) quickSortTradntion(x, y, z)
-// #define QUICK_SORT(x, y, z) quickSort(x, y, z)
-// #define QUICK_SORT(x, y, z) quickSort3way(x, y, z)
-#define QUICK_SORT(x, y, z) quickSort2Pivot(x, y, z)
+    for(int i=left; i < right; i++){
+        bool swapped = false;
+        for(int j = left; j < right - i;j++){
+            if(arr[j] > arr[j+1]){
+                std::swap(arr[j], arr[j+1]);
+                swapped = true;
+            }
+        }
+
+        if(!swapped){
+            break;
+        }
+    }   
+}
+
+void selectSort(int* arr, int left, int right){
+    if (left >= right){
+        return;
+    }
+
+    for(int i = left; i < right; i++){
+        int index = i;
+        for(int j= i + 1; j < right; j++){
+            if(arr[j] < arr[index]){
+                index = j;
+            }
+        }
+        std::swap(arr[i], arr[index]);
+    }
+}
+
+void insertSort(int* arr, int left, int right){
+    if(left >= right){
+        return;
+    }
+
+    for(int i = left + 1; i < right; i++){
+        int pivot = arr[i];
+        int j = i - 1;
+        while(j >= left && arr[j] > pivot){
+            arr[j + 1] = arr[j];
+        }
+        arr[j + 1] = pivot;
+    }
+}
+
+// #define SORT_ALGO(x, y, z) quickSortTradntion(x, y, z)
+// #define SORT_ALGO(x, y, z) quickSort(x, y, z)
+// #define SORT_ALGO(x, y, z) quickSort3way(x, y, z)
+// #define SORT_ALGO(x, y, z) quickSort2Pivot(x, y, z)
+// #define SORT_ALGO(x, y, z) bubbleSort(x, y, z)
+// #define SORT_ALGO(x, y, z) selectSort(x, y, z)
+#define SORT_ALGO(x, y, z) insertSort(x, y, z)
 
 int main(int argc, char const *argv[])
 {
@@ -152,21 +205,21 @@ int main(int argc, char const *argv[])
     generateRandomArray(arr, size, 0, size);
     {
         TimeCalc calc_;
-        QUICK_SORT(arr, 0, size -1);
+        SORT_ALGO(arr, 0, size -1);
     };  
     assert(std::is_sorted(arr, arr + size - 1));
 
     generateNearlySortedArray(arr, size, 100);
     {
         TimeCalc calc_;
-        QUICK_SORT(arr, 0, size -1);
+        SORT_ALGO(arr, 0, size -1);
     };  
     assert(std::is_sorted(arr, arr + size - 1));
 
     generateSortedArray(arr, size);
     {
         TimeCalc calc_;
-        QUICK_SORT(arr, 0, size -1);
+        SORT_ALGO(arr, 0, size -1);
     };  
     assert(std::is_sorted(arr, arr + size - 1));
 

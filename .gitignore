@@ -1,0 +1,6 @@
+.vscode/.*
+.vscode/*.*
+.vscode
+.git
+*.o
+tmp
